@@ -35,6 +35,10 @@ pipeline {
     }
     
     post {
+        when {
+            branch 'master'
+            changeset "**/worker/**"
+        }
         always {
             archiveArtifacts artifacts: '**/target/*.jar', fingerprint: true
             echo "Build pipeline is complete"
