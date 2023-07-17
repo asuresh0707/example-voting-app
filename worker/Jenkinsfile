@@ -24,6 +24,10 @@ pipeline {
             }
         }
          stage('package') {
+            when {
+            branch 'master'
+            changeset "**/worker/**"
+        }
             steps {
                 echo "Packing the worker App" 
                  dir('worker') {
@@ -35,10 +39,7 @@ pipeline {
     }
     
     post {
-        when {
-            branch 'master'
-            changeset "**/worker/**"
-        }
+        
         always {
             archiveArtifacts artifacts: '**/target/*.jar', fingerprint: true
             echo "Build pipeline is complete"
