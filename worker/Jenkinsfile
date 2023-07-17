@@ -10,20 +10,25 @@ pipeline {
             steps {
                echo "compiling the application" 
                dir('worker') {
-               sh mvn compile
+               sh 'mvn compile'
                }
             }
         }
          stage('test') {
             steps {
                 echo "Running unit tests for worker app" 
+                 dir('worker') {
+                   sh 'mvn clean test'
+               }
                 
             }
         }
          stage('package') {
             steps {
                 echo "Packing the worker App" 
-                
+                 dir('worker') {
+                  sh 'mvn package'
+               }
             }
         }
     }
